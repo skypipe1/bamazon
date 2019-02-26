@@ -12,7 +12,21 @@ var connection = mysql.createConnection({
 	database: 'Bamazon'
 });
 
-
+// welcomes user to Bamazon
+function welcomePrompt(){
+    inquirer.prompt([{
+        type: 'confirm',
+        name: "confirm",
+        message: 'Welcome to Bamazon! would you like to shop with us today?',
+        default: true
+    }]).then(function(input){
+        if (input.confirm === true){
+            promptPurchase();
+        }else{
+            console.log("Thank you, please visit again soon!")
+        }
+    })
+}
 
 function promptPurchase(){
     inquirer.prompt([{
@@ -25,11 +39,15 @@ function promptPurchase(){
     {
         type: 'input',
         name: 'quantity',
-        message: 'How many do you need?',
+        message: 'How many do you want?',
         validate: validateInput,
         filter: Number
     }])
+
 }
+
+
+
 // function will only allow the user to input a positive number
 function validateInput(value) {
 	var integer = Number.isInteger(parseFloat(value));
@@ -41,4 +59,4 @@ function validateInput(value) {
 		return 'Please enter a whole non-zero number.';
 	}
 }
-promptPurchase();
+welcomePrompt();
