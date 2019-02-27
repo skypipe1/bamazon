@@ -59,4 +59,49 @@ function validateInput(value) {
 		return 'Please enter a whole non-zero number.';
 	}
 }
-welcomePrompt();
+// welcomePrompt();
+
+
+// displayInventory displays inventory, then calls welcomePrompt function to welcome the user.
+function displayInventory() {
+	
+
+	
+	queryProducts = 'SELECT * FROM products';
+
+	// Make the db query
+	connection.query(queryProducts, function(err, data) {
+		if (err) throw err;
+
+		console.log('Existing Inventory: ');
+		console.log('...................');
+
+		var itemTable = '';
+		for (var i = 0; i < data.length; i++) {
+			itemTable = '';
+			itemTable += 'Item ID: ' + data[i].item_id + '  ||  ';
+			itemTable += 'Product Name: ' + data[i].product_name + '  ||  ';
+			itemTable += 'Department: ' + data[i].department_name + '  ||  ';
+			itemTable += 'Price: $' + data[i].price;
+            
+			console.log(itemTable);
+		}
+
+	  	console.log("---------------------------------------------------------------------");
+
+	  	
+          // promptPurchase();
+        welcomePrompt();
+	})
+}
+
+
+
+function runBamazonApp() {
+
+
+    displayInventory();
+}
+
+// Run the application
+runBamazonApp();
