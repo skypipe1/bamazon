@@ -1,7 +1,7 @@
 # Bamazon App
 
 ```
-Welcome to Bamazon! This is an Amazon-like storefront built with MySQL and Node.js. 
+Welcome to Bamazon! This is an Amazon-like storefront built with JavaScript, MySQL, and Node.js. 
 
 Within the customer portal, you can choose an item you'd like to purchase
 along with the quantity! Transaction complete! However, if we do not have enough 
