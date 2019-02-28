@@ -22,6 +22,8 @@ To run this module in the terminal:
 
 `node bamazonCustomer.js`
 
+<a href="https://youtu.be/iu_4OceMyWY">Video Demo</a>
+
 
  ## Third-party Node Modules
 
