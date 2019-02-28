@@ -1,7 +1,6 @@
 var inquirer = require('inquirer');
 var mysql = require('mysql');
 
-
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -23,9 +22,9 @@ function welcomePrompt() {
             promptPurchase();
         } else {
             console.log("Thank you come again!")
-        }
-    })
-}
+        };
+    });
+};
 
 function promptPurchase() {
     inquirer.prompt([{
@@ -51,8 +50,6 @@ function promptPurchase() {
         connection.query(queryStr, { item_id: item }, function (err, data) {
             if (err) throw err;
 
-            // If the user has selected an invalid item ID, data attay will be empty
-            // console.log('data = ' + JSON.stringify(data));
 
             if (data.length === 0) {
                 console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
@@ -61,15 +58,11 @@ function promptPurchase() {
             } else {
                 var productData = data[0];
 
-                // If the quantity requested by the user is in stock
                 if (quantity <= productData.stock_quantity) {
                     console.log('The product you requested is in stock! Placing order!');
 
-                    // updating query string
                     var updateQueryStr = 'UPDATE products SET stock_quantity = ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + item;
                     
-
-                    // Update inventory
                     connection.query(updateQueryStr, function (err, data) {
                         if (err) throw err;
 
@@ -77,30 +70,24 @@ function promptPurchase() {
                         console.log('Thank you for shopping with us!');
                         console.log("\n---------------------------------------------------------------------\n");
 
-                        
                         connection.end();
-                    })
+                    });
                 } else {
                     console.log('There is not enough product in stock, your order can not be placed.');
                     console.log('Please modify your order.');
                     console.log("\n---------------------------------------------------------------------\n");
 
                     displayInventory();
-                }
-            }
-        })
-    })
-}
+                };
+            };
+        });
+    });
+};
 
-
-// displayInventory will retrieve the current inventory from the database and output it to the console
 function displayInventory() {
-
-
     
     queryProducts = 'SELECT * FROM products';
-
-   
+    
     connection.query(queryProducts, function (err, data) {
         if (err) throw err;
 
@@ -116,26 +103,21 @@ function displayInventory() {
             itemTable += 'Price: $' + data[i].price + '\n';
 
             console.log(itemTable);
-        }
+        };
 
         console.log("---------------------------------------------------------------------\n");
 
-
         welcomePrompt();
-    })
-}
-
-
+    });
+};
 
 function runBamazonApp() {
-    // Display the available inventory
+   
     displayInventory();
-}
+};
 
-// starts the application
 runBamazonApp();
 
-// function will only allow the user to input a positive number
 function checkForNumberInput(value) {
     var integer = Number.isInteger(parseFloat(value));
     var sign = Math.sign(value);
@@ -144,5 +126,5 @@ function checkForNumberInput(value) {
         return true;
     } else {
         return 'Please enter a positive number!.';
-    }
-}
+    };
+};
